@@ -52,7 +52,7 @@ namespace REBGV.CosmosDB
 		
 		public static async Task<Container> FetchContainerAsync(Database database)
 		{
-			Container container = await database.CreateContainerIfNotExistsAsync("listings", "/addressStreetName");
+			Container container = await database.CreateContainerIfNotExistsAsync("listings", "/id");
 			return container;
 		}
 
@@ -60,7 +60,7 @@ namespace REBGV.CosmosDB
 		{
 			try
 			{
-				ItemResponse<Listing> dataResponse = await cont.CreateItemAsync<Listing>(data, new PartitionKey(data.addressStreetName));
+				ItemResponse<Listing> dataResponse = await cont.CreateItemAsync<Listing>(data, new PartitionKey(data.id));
 				Console.WriteLine("Created item in database with id: {0} Operation consumed {1} RUs.\n", dataResponse.Resource.id, dataResponse.RequestCharge);
 				return 200;
 			}
